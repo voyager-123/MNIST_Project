@@ -4,6 +4,7 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
 
+
 print("="*60)
 print("开始 MNIST 手写数字识别项目")
 print(f"PyTorch 版本: {torch.__version__}")
