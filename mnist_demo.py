@@ -8,6 +8,9 @@ import time
 import os
 from pathlib import Path
 
+# Matplotlib 字体设置，避免中文乱码
+plt.rcParams['font.sans-serif'] = ['Microsoft YaHei', 'SimHei', 'Arial Unicode MS', 'DejaVu Sans']
+plt.rcParams['axes.unicode_minus'] = False
 
 print("="*60)
 print("开始 MNIST 手写数字识别项目")
@@ -226,27 +229,29 @@ print(f"   测试损失: {final_test_loss:.4f}")
 print(f"   测试精度: {final_test_acc:.2f}%")
 
 # ==================== 可视化训练过程 ====================
+Path('outputs').mkdir(parents=True, exist_ok=True)
 plt.figure(figsize=(12, 4))
 
 plt.subplot(1, 2, 1)
-plt.plot(history['train_loss'], label='训练损失', marker='o')
-plt.plot(history['test_loss'], label='测试损失', marker='s')
-plt.xlabel('轮次')
-plt.ylabel('损失')
-plt.title('损失变化曲线')
+plt.plot(history['train_loss'], label='训练损失 / Train Loss', marker='o')
+plt.plot(history['test_loss'], label='测试损失 / Test Loss', marker='s')
+plt.xlabel('轮次 / Epoch')
+plt.ylabel('损失 / Loss')
+plt.title('损失变化曲线 / Loss Curve')
 plt.legend()
 plt.grid(True, alpha=0.3)
 
 plt.subplot(1, 2, 2)
-plt.plot(history['train_acc'], label='训练精度', marker='o')
-plt.plot(history['test_acc'], label='测试精度', marker='s')
-plt.xlabel('轮次')
-plt.ylabel('精度 (%)')
-plt.title('精度变化曲线')
+plt.plot(history['train_acc'], label='训练精度 / Train Acc', marker='o')
+plt.plot(history['test_acc'], label='测试精度 / Test Acc', marker='s')
+plt.xlabel('轮次 / Epoch')
+plt.ylabel('精度 (%) / Accuracy')
+plt.title('精度变化曲线 / Accuracy Curve')
 plt.legend()
 plt.grid(True, alpha=0.3)
 
 plt.tight_layout()
+plt.savefig('outputs/loss_accuracy_curves.png', dpi=150, bbox_inches='tight')
 plt.show()
 
 # ==================== 可视化预测结果 ====================
@@ -269,6 +274,7 @@ with torch.no_grad():
         ax.axis('off')
 
 plt.tight_layout()
+plt.savefig('outputs/prediction_grid.png', dpi=150, bbox_inches='tight')
 plt.show()
 
 print("\n✅ MNIST 项目优化完成！")
